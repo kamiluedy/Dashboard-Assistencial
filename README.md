@@ -1,32 +1,58 @@
-# React + TypeScript + Vite
+# Dashboard Assistencial
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Painel de indicadores clinicos e ocupacao hospitalar, com filtros interativos por periodo (mes/ano) e por setor.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Indicadores (KPIs): pacientes internados, leitos da maternidade, altas concedidas, taxa de retorno, entradas no periodo e ocupacao geral
+- Grafico de fluxo de pacientes (entradas, altas e retornos) por mes ou por dia
+- Grafico de ocupacao por setor, com destaque de status (normal / atencao / critico)
+- Filtro por mes e ano
+- Clique nas barras do grafico de ocupacao para filtrar por setor
+- Clique nos pontos do grafico de fluxo para filtrar por mes ou por dia
+- Tabela com as movimentacoes recentes de pacientes
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Recharts](https://recharts.org/) (graficos)
+- [Lucide](https://lucide.dev/) (icones)
 
-## Expanding the Oxlint configuration
+## Como rodar o projeto
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Pre-requisito: [Node.js](https://nodejs.org/) instalado.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+# instalar as dependencias
+npm install
+
+# rodar em modo desenvolvimento
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+O projeto abre por padrao em `http://localhost:5173`.
+
+### Outros comandos
+
+```bash
+npm run build    # gera a versao de producao
+npm run preview  # visualiza a versao de producao localmente
+npm run lint      # roda o linter
+```
+
+## Estrutura do projeto
+
+```
+src/
+  components/   componentes de UI (cards, graficos, tabela, filtros)
+  data/         dados de exemplo (mock)
+  lib/          funcoes de calculo, agregacao e filtro
+  types.ts      tipos compartilhados
+```
+
+## Dados
+
+Os dados exibidos sao gerados automaticamente (mock) apenas para fins de demonstracao. Para usar dados reais, substitua o conteudo de `src/data/mockData.ts` por uma integracao com sua fonte de dados (API, planilha, banco de dados etc).
