@@ -10,12 +10,12 @@ interface PeriodoFiltroProps {
 }
 
 const selectClass =
-  "appearance-none rounded-lg border border-[#e5e7eb] bg-white px-3 py-2 pr-8 text-sm text-[#0b0b0b] outline-none focus:border-[#2a78d6]"
+  "appearance-none rounded-lg border border-[#e5e7eb] bg-white px-3 py-2 pr-8 text-sm text-[#0b0b0b] outline-none focus:border-[#2a78d6] dark:border-white/10 dark:bg-[#0f2044] dark:text-white dark:focus:border-[#3987e5]"
 
 export function PeriodoFiltro({ ano, mes, anos, onAnoChange, onMesChange }: PeriodoFiltroProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#e5e7eb] bg-white px-4 py-3 shadow-sm">
-      <span className="flex items-center gap-2 text-sm font-medium text-[#6b7280]">
+    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#e5e7eb] bg-white px-4 py-3 shadow-sm dark:border-white/10 dark:bg-[#132a52]">
+      <span className="flex items-center gap-2 text-sm font-medium text-[#6b7280] dark:text-[#9fb0d1]">
         <Calendar size={16} />
         Periodo
       </span>
@@ -56,7 +56,7 @@ export function PeriodoFiltro({ ano, mes, anos, onAnoChange, onMesChange }: Peri
             onAnoChange("todos")
             onMesChange("todos")
           }}
-          className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95]"
+          className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
         >
           Limpar filtros
         </button>

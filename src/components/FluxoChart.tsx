@@ -9,16 +9,45 @@ import {
   YAxis,
 } from "recharts"
 import type { PontoFluxo } from "../lib/agregacao"
+import type { Tema } from "../lib/useTheme"
 
-const COLOR_ENTRADAS = "#2a78d6"
-const COLOR_ALTAS = "#1baf7a"
-const COLOR_RETORNOS = "#e34948"
+const CORES = {
+  light: {
+    entradas: "#2a78d6",
+    altas: "#1baf7a",
+    retornos: "#e34948",
+    grade: "#e5e7eb",
+    eixo: "#c3c2b7",
+    texto: "#6b7280",
+    tituloTexto: "#0b0b0b",
+    tooltipBg: "#ffffff",
+    tooltipBorder: "#e5e7eb",
+    dotStroke: "#ffffff",
+    cardBg: "bg-white",
+    cardBorder: "border-[#e5e7eb]",
+  },
+  dark: {
+    entradas: "#3987e5",
+    altas: "#199e70",
+    retornos: "#e66767",
+    grade: "#25396b",
+    eixo: "#3a4d80",
+    texto: "#9fb0d1",
+    tituloTexto: "#ffffff",
+    tooltipBg: "#0f2044",
+    tooltipBorder: "#25396b",
+    dotStroke: "#0f2044",
+    cardBg: "bg-[#132a52]",
+    cardBorder: "border-white/10",
+  },
+} as const
 
 interface FluxoChartProps {
   dados: PontoFluxo[]
   titulo: string
   pontoSelecionado: string | null
   onPontoClick: (chave: string) => void
+  tema: Tema
 }
 
 interface DotProps {
@@ -27,7 +56,7 @@ interface DotProps {
   index?: number
 }
 
-function criarDot(dados: PontoFluxo[], onPontoClick: (chave: string) => void, cor: string, raio: number) {
+function criarDot(dados: PontoFluxo[], onPontoClick: (chave: string) => void, cor: string, stroke: string, raio: number) {
   return function Dot({ cx, cy, index }: DotProps) {
     if (cx === undefined || cy === undefined || index === undefined) return null
     const ponto = dados[index]
@@ -37,7 +66,7 @@ function criarDot(dados: PontoFluxo[], onPontoClick: (chave: string) => void, co
         cy={cy}
         r={raio}
         fill={cor}
-        stroke="#ffffff"
+        stroke={stroke}
         strokeWidth={1}
         style={{ cursor: "pointer" }}
         onClick={() => ponto && onPontoClick(ponto.chave)}
@@ -46,20 +75,24 @@ function criarDot(dados: PontoFluxo[], onPontoClick: (chave: string) => void, co
   }
 }
 
-export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick }: FluxoChartProps) {
-  const DotEntradas = criarDot(dados, onPontoClick, COLOR_ENTRADAS, 3)
-  const ActiveDotEntradas = criarDot(dados, onPontoClick, COLOR_ENTRADAS, 5)
-  const DotAltas = criarDot(dados, onPontoClick, COLOR_ALTAS, 3)
-  const ActiveDotAltas = criarDot(dados, onPontoClick, COLOR_ALTAS, 5)
-  const DotRetornos = criarDot(dados, onPontoClick, COLOR_RETORNOS, 3)
-  const ActiveDotRetornos = criarDot(dados, onPontoClick, COLOR_RETORNOS, 5)
+export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick, tema }: FluxoChartProps) {
+  const c = CORES[tema]
+
+  const DotEntradas = criarDot(dados, onPontoClick, c.entradas, c.dotStroke, 3)
+  const ActiveDotEntradas = criarDot(dados, onPontoClick, c.entradas, c.dotStroke, 5)
+  const DotAltas = criarDot(dados, onPontoClick, c.altas, c.dotStroke, 3)
+  const ActiveDotAltas = criarDot(dados, onPontoClick, c.altas, c.dotStroke, 5)
+  const DotRetornos = criarDot(dados, onPontoClick, c.retornos, c.dotStroke, 3)
+  const ActiveDotRetornos = criarDot(dados, onPontoClick, c.retornos, c.dotStroke, 5)
 
   return (
-    <div className="rounded-xl border border-[#e5e7eb] bg-white p-5 shadow-sm">
+    <div className={`rounded-xl border ${c.cardBorder} ${c.cardBg} p-5 shadow-sm`}>
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="text-base font-semibold text-[#0b0b0b]">Fluxo de pacientes</h2>
-          <p className="text-sm text-[#6b7280]">
+          <h2 className="text-base font-semibold" style={{ color: c.tituloTexto }}>
+            Fluxo de pacientes
+          </h2>
+          <p className="text-sm" style={{ color: c.texto }}>
             {titulo}
             {pontoSelecionado ? " - clique num ponto para trocar" : " - clique num ponto para filtrar"}
           </p>
@@ -67,7 +100,7 @@ export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick }: Fl
         {pontoSelecionado && (
           <button
             onClick={() => onPontoClick(pontoSelecionado)}
-            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95]"
+            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
           >
             Limpar
           </button>
@@ -75,30 +108,30 @@ export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick }: Fl
       </div>
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={dados} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid stroke="#e5e7eb" vertical={false} />
+          <CartesianGrid stroke={c.grade} vertical={false} />
           <XAxis
             dataKey="label"
-            tick={{ fill: "#6b7280", fontSize: 12 }}
-            axisLine={{ stroke: "#c3c2b7" }}
+            tick={{ fill: c.texto, fontSize: 12 }}
+            axisLine={{ stroke: c.eixo }}
             tickLine={false}
           />
-          <YAxis tick={{ fill: "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} width={32} />
+          <YAxis tick={{ fill: c.texto, fontSize: 12 }} axisLine={false} tickLine={false} width={32} />
           <Tooltip
             contentStyle={{
               borderRadius: 8,
-              border: "1px solid #e5e7eb",
+              border: `1px solid ${c.tooltipBorder}`,
               fontSize: 13,
-              backgroundColor: "#ffffff",
-              color: "#0b0b0b",
+              backgroundColor: c.tooltipBg,
+              color: c.tituloTexto,
             }}
-            labelStyle={{ color: "#0b0b0b" }}
+            labelStyle={{ color: c.tituloTexto }}
           />
-          <Legend iconType="line" wrapperStyle={{ fontSize: 13, color: "#6b7280" }} />
+          <Legend iconType="line" wrapperStyle={{ fontSize: 13, color: c.texto }} />
           <Line
             type="monotone"
             dataKey="entradas"
             name="Entradas"
-            stroke={COLOR_ENTRADAS}
+            stroke={c.entradas}
             strokeWidth={2}
             dot={<DotEntradas />}
             activeDot={<ActiveDotEntradas />}
@@ -107,7 +140,7 @@ export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick }: Fl
             type="monotone"
             dataKey="altas"
             name="Altas"
-            stroke={COLOR_ALTAS}
+            stroke={c.altas}
             strokeWidth={2}
             dot={<DotAltas />}
             activeDot={<ActiveDotAltas />}
@@ -116,7 +149,7 @@ export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick }: Fl
             type="monotone"
             dataKey="retornos"
             name="Retornos"
-            stroke={COLOR_RETORNOS}
+            stroke={c.retornos}
             strokeWidth={2}
             dot={<DotRetornos />}
             activeDot={<ActiveDotRetornos />}

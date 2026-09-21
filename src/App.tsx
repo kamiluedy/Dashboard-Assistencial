@@ -10,9 +10,11 @@ import { fluxoDiario, ocupacaoSetores, pacientes } from "./data/mockData"
 import { calcularKpis, calcularOcupacaoTotal } from "./lib/metrics"
 import { anosDisponiveis, filtrarFluxoPorPeriodo, filtrarPacientesPorPeriodo, MESES } from "./lib/filters"
 import { agregarFluxo } from "./lib/agregacao"
+import { useTheme } from "./lib/useTheme"
 import type { Setor } from "./types"
 
 function App() {
+  const { tema, alternarTema } = useTheme()
   const anos = useMemo(() => anosDisponiveis(fluxoDiario), [])
   const [ano, setAno] = useState<number | "todos">(anos[0] ?? "todos")
   const [mes, setMes] = useState<number | "todos">("todos")
@@ -61,8 +63,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#eef0f3]">
-      <Header />
+    <div className="min-h-screen bg-[#eef0f3] dark:bg-[#0b1830]">
+      <Header tema={tema} onAlternarTema={alternarTema} />
 
       <main className="mx-auto max-w-7xl px-6 py-6">
         <div className="mb-4">
@@ -70,7 +72,7 @@ function App() {
         </div>
 
         {(setorSelecionado || diaSelecionado) && (
-          <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-[#c7dcf5] bg-[#eaf2fc] px-4 py-2 text-sm text-[#184f95]">
+          <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-[#c7dcf5] bg-[#eaf2fc] px-4 py-2 text-sm text-[#184f95] dark:border-[#25396b] dark:bg-[#132a52] dark:text-[#8fb8f2]">
             {setorSelecionado && (
               <span>
                 Setor: <strong>{setorSelecionado}</strong>
@@ -86,7 +88,7 @@ function App() {
                 setSetorSelecionado(null)
                 setDiaSelecionado(null)
               }}
-              className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95]"
+              className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
             >
               Remover filtros
             </button>
@@ -132,8 +134,14 @@ function App() {
             titulo={tituloPeriodo}
             pontoSelecionado={mes === "todos" ? null : diaSelecionado}
             onPontoClick={handlePontoFluxoClick}
+            tema={tema}
           />
-          <OcupacaoChart dados={ocupacaoSetores} setorSelecionado={setorSelecionado} onSetorClick={handleSetorClick} />
+          <OcupacaoChart
+            dados={ocupacaoSetores}
+            setorSelecionado={setorSelecionado}
+            onSetorClick={handleSetorClick}
+            tema={tema}
+          />
         </section>
 
         <section className="mt-4">
@@ -141,7 +149,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="border-t border-[#dbe1ea] py-4 text-center text-xs text-[#8792a3]">
+      <footer className="border-t border-[#dbe1ea] py-4 text-center text-xs text-[#8792a3] dark:border-white/10 dark:text-[#6f83ab]">
         Dashboard Assistencial - dados de demonstracao
       </footer>
     </div>

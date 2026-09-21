@@ -1,10 +1,10 @@
 import type { Paciente, StatusPaciente } from "../types"
 
 const statusStyle: Record<StatusPaciente, string> = {
-  Internado: "bg-[#2a78d61a] text-[#184f95]",
-  Alta: "bg-[#1baf7a1a] text-[#0c7a52]",
-  Transferido: "bg-[#eda1001a] text-[#8a6200]",
-  Retorno: "bg-[#e349481a] text-[#a12c2b]",
+  Internado: "bg-[#2a78d61a] text-[#184f95] dark:bg-[#3987e526] dark:text-[#8fb8f2]",
+  Alta: "bg-[#1baf7a1a] text-[#0c7a52] dark:bg-[#199e7026] dark:text-[#7fd9b6]",
+  Transferido: "bg-[#eda1001a] text-[#8a6200] dark:bg-[#c9850026] dark:text-[#e8bd6b]",
+  Retorno: "bg-[#e349481a] text-[#a12c2b] dark:bg-[#e6676726] dark:text-[#f2a3a3]",
 }
 
 function formatarDataBr(iso: string) {
@@ -18,15 +18,15 @@ export function PacientesTable({ pacientes }: { pacientes: Paciente[] }) {
     .slice(0, 10)
 
   return (
-    <div className="rounded-xl border border-[#e5e7eb] bg-white p-5 shadow-sm">
+    <div className="rounded-xl border border-[#e5e7eb] bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#132a52]">
       <div className="mb-4">
-        <h2 className="text-base font-semibold text-[#0b0b0b]">Movimentacoes recentes</h2>
-        <p className="text-sm text-[#6b7280]">Ultimos 10 registros de pacientes</p>
+        <h2 className="text-base font-semibold text-[#0b0b0b] dark:text-white">Movimentacoes recentes</h2>
+        <p className="text-sm text-[#6b7280] dark:text-[#9fb0d1]">Ultimos 10 registros de pacientes</p>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-[#e5e7eb] text-xs uppercase tracking-wide text-[#9ca3af]">
+            <tr className="border-b border-[#e5e7eb] text-xs uppercase tracking-wide text-[#9ca3af] dark:border-white/10 dark:text-[#6f83ab]">
               <th className="py-2 pr-3 font-medium">Paciente</th>
               <th className="py-2 pr-3 font-medium">Setor</th>
               <th className="py-2 pr-3 font-medium">Entrada</th>
@@ -36,18 +36,18 @@ export function PacientesTable({ pacientes }: { pacientes: Paciente[] }) {
           </thead>
           <tbody>
             {recentes.map((p) => (
-              <tr key={p.id} className="border-b border-[#e5e7eb] last:border-0">
+              <tr key={p.id} className="border-b border-[#e5e7eb] last:border-0 dark:border-white/10">
                 <td className="py-2.5 pr-3">
-                  <p className="font-medium text-[#0b0b0b]">{p.nome}</p>
-                  <p className="text-xs text-[#9ca3af]">
+                  <p className="font-medium text-[#0b0b0b] dark:text-white">{p.nome}</p>
+                  <p className="text-xs text-[#9ca3af] dark:text-[#6f83ab]">
                     {p.id} - {p.idade} anos
                   </p>
                 </td>
-                <td className="py-2.5 pr-3 text-[#374151]">{p.setor}</td>
-                <td className="py-2.5 pr-3 text-[#374151]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                <td className="py-2.5 pr-3 text-[#374151] dark:text-[#c3cee6]">{p.setor}</td>
+                <td className="py-2.5 pr-3 text-[#374151] dark:text-[#c3cee6]" style={{ fontVariantNumeric: "tabular-nums" }}>
                   {formatarDataBr(p.dataEntrada)}
                 </td>
-                <td className="py-2.5 pr-3 text-[#374151]">{p.convenio}</td>
+                <td className="py-2.5 pr-3 text-[#374151] dark:text-[#c3cee6]">{p.convenio}</td>
                 <td className="py-2.5 pr-3">
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${statusStyle[p.status]}`}

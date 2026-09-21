@@ -1,6 +1,12 @@
-import { Activity } from "lucide-react"
+import { Activity, Moon, Sun } from "lucide-react"
+import type { Tema } from "../lib/useTheme"
 
-export function Header() {
+interface HeaderProps {
+  tema: Tema
+  onAlternarTema: () => void
+}
+
+export function Header({ tema, onAlternarTema }: HeaderProps) {
   const hoje = new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
     day: "2-digit",
@@ -20,7 +26,16 @@ export function Header() {
             <p className="text-sm text-white/80">Painel de indicadores clinicos e ocupacao hospitalar</p>
           </div>
         </div>
-        <p className="hidden text-sm capitalize text-white/80 sm:block">{hoje}</p>
+        <div className="flex items-center gap-4">
+          <p className="hidden text-sm capitalize text-white/80 sm:block">{hoje}</p>
+          <button
+            onClick={onAlternarTema}
+            aria-label={tema === "light" ? "Ativar tema escuro" : "Ativar tema claro"}
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 text-white transition hover:bg-white/25"
+          >
+            {tema === "light" ? <Moon size={18} strokeWidth={2} /> : <Sun size={18} strokeWidth={2} />}
+          </button>
+        </div>
       </div>
     </header>
   )
