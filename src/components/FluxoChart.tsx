@@ -30,15 +30,15 @@ const CORES = {
     entradas: "#3987e5",
     altas: "#199e70",
     retornos: "#e66767",
-    grade: "#25396b",
-    eixo: "#3a4d80",
-    texto: "#9fb0d1",
+    grade: "#1f2937",
+    eixo: "#2a2f3d",
+    texto: "#8b93a7",
     tituloTexto: "#ffffff",
-    tooltipBg: "#0f2044",
-    tooltipBorder: "#25396b",
-    dotStroke: "#0f2044",
-    cardBg: "bg-[#132a52]",
-    cardBorder: "border-white/10",
+    tooltipBg: "#161a23",
+    tooltipBorder: "#1f2937",
+    dotStroke: "#161a23",
+    cardBg: "bg-[#12151c]",
+    cardBorder: "border-[#1f2937]",
   },
 } as const
 
@@ -100,7 +100,7 @@ export function FluxoChart({ dados, titulo, pontoSelecionado, onPontoClick, tema
         {pontoSelecionado && (
           <button
             onClick={() => onPontoClick(pontoSelecionado)}
-            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
+            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#5eb8ff] dark:hover:text-white"
           >
             Limpar
           </button>

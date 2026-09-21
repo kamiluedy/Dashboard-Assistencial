@@ -63,7 +63,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#eef0f3] dark:bg-[#0b1830]">
+    <div className="min-h-screen bg-[#eef0f3] dark:bg-[#0a0c10]">
       <Header tema={tema} onAlternarTema={alternarTema} />
 
       <main className="mx-auto max-w-7xl px-6 py-6">
@@ -72,7 +72,7 @@ function App() {
         </div>
 
         {(setorSelecionado || diaSelecionado) && (
-          <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-[#c7dcf5] bg-[#eaf2fc] px-4 py-2 text-sm text-[#184f95] dark:border-[#25396b] dark:bg-[#132a52] dark:text-[#8fb8f2]">
+          <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-[#c7dcf5] bg-[#eaf2fc] px-4 py-2 text-sm text-[#184f95] dark:border-[#1f2937] dark:bg-[#12151c] dark:text-[#5eb8ff]">
             {setorSelecionado && (
               <span>
                 Setor: <strong>{setorSelecionado}</strong>
@@ -88,7 +88,7 @@ function App() {
                 setSetorSelecionado(null)
                 setDiaSelecionado(null)
               }}
-              className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
+              className="ml-auto text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#5eb8ff] dark:hover:text-white"
             >
               Remover filtros
             </button>
@@ -149,7 +149,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="border-t border-[#dbe1ea] py-4 text-center text-xs text-[#8792a3] dark:border-white/10 dark:text-[#6f83ab]">
+      <footer className="border-t border-[#dbe1ea] py-4 text-center text-xs text-[#8792a3] dark:border-[#1f2937] dark:text-[#565d70]">
         Dashboard Assistencial - dados de demonstracao
       </footer>
     </div>

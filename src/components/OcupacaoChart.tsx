@@ -21,15 +21,15 @@ const CORES = {
     normal: "#199e70",
     atencao: "#3987e5",
     critico: "#e66767",
-    grade: "#25396b",
-    eixo: "#3a4d80",
-    texto: "#9fb0d1",
-    textoEixoY: "#d5deef",
+    grade: "#1f2937",
+    eixo: "#2a2f3d",
+    texto: "#8b93a7",
+    textoEixoY: "#c7cdd9",
     tituloTexto: "#ffffff",
-    tooltipBg: "#0f2044",
-    tooltipBorder: "#25396b",
-    cardBg: "bg-[#132a52]",
-    cardBorder: "border-white/10",
+    tooltipBg: "#161a23",
+    tooltipBorder: "#1f2937",
+    cardBg: "bg-[#12151c]",
+    cardBorder: "border-[#1f2937]",
   },
 } as const
 
@@ -68,7 +68,7 @@ export function OcupacaoChart({ dados, setorSelecionado, onSetorClick, tema }: O
         {setorSelecionado && (
           <button
             onClick={() => onSetorClick(setorSelecionado)}
-            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#8fb8f2] dark:hover:text-white"
+            className="text-xs font-medium text-[#2a78d6] hover:text-[#184f95] dark:text-[#5eb8ff] dark:hover:text-white"
           >
             Limpar
           </button>
